@@ -100,6 +100,7 @@ export default {
     });
   },
   // reset the counter when user leave the current project page
+  // and set a new ad for next project visualized by the user
   beforeRouteLeave(to, from, next) {
     this.stopCounter();
     this.setRandomAd();

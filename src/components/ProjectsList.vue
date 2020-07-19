@@ -21,7 +21,7 @@
           </v-card-text>
 
           <v-card-actions class="justify-center">
-            <v-btn color="blue" @click="singleProject(project.asso_id)">Donner gratuitement</v-btn>
+            <v-btn color="blue" @click="singleProject(project._id)">Donner gratuitement</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>

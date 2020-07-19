@@ -63,7 +63,20 @@ export default {
       "setCurrentProject_id",
       "setCurrentAd_id"
     ]),
+    updateProject() {
+      return this.allProjects.filter(project => {
+        if(project._id === this.$route.params.id) {
+          project.donation_current += 1;
+        }
+      });
+    },
     nextStep () {
+      const projectId = this.$route.params.id;
+      const adId = this.getAd._id;
+      localStorage.setItem("currentProjectId", projectId);
+      localStorage.setItem("currentAdId", adId);
+
+      this.updateProject();
       this.showModal();
     }
   },
