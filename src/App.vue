@@ -3,22 +3,22 @@
     <v-app-bar app>
       <v-toolbar-title>
         <router-link to='/' tag='span' style='cursor: pointer'>
-          <v-img src="https://static.goodeed.com/pictures/goodeed/home/lgbtq/logo_home.svg"></v-img>
+          <v-img src="https://static.goodeed.com/pictures/goodeed/home/lgbtq/logo_home.svg" alt="goodeed_logo" class="img-responsive"></v-img>
         </router-link>
       </v-toolbar-title>
       
-      <v-spacer></v-spacer>
+      <v-spacer class="spacer-flex-grow"></v-spacer>
 
       <v-row justify="end">
-        <v-flex xs12 sm6 md3 align-self-center v-show="visible">
+        <v-flex xs12 sm6 md3 align-self-center v-show="visible" class="donator-container">
           Don financé par <span class="stylized-ad-title">{{ getAd.title }}</span>
         </v-flex>
 
         <v-flex xs12 sm6 md3>
           <v-progress-linear rounded height="40" :value="count" v-show="visible" :color="displayProgressBarBtn || confirmedProgressBarText ? 'green' : 'blue'">
-            <div v-show="displayProgressBarText">
-              <span>Don en cours</span>
-              <strong>{{ totalTime }}</strong>
+            <div v-show="displayProgressBarText" class="align-self-center">
+              <span class="text-padding">Don en cours</span>
+              <strong class="text-padding">{{ totalTime }}</strong>
             </div>
             <v-btn text class="align-self-center" v-show="displayProgressBarBtn" @click="nextStep()">Valider mon don</v-btn>
             <span v-show="confirmedProgressBarText">Publicité confirmée</span>
@@ -97,5 +97,47 @@ export default {
 .stylized-ad-title {
   color: #2196f3;
   font-weight: bold;
+}
+
+.img-responsive {
+  width: 100%;
+  height: auto;
+}
+
+.text-padding {
+  padding: 0 0.5rem;
+}
+
+.donator-container {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .img-responsive {
+    width: 73px !important;
+  }
+
+  .spacer-flex-grow {
+    flex-grow: 0.5 !important;
+  }
+
+}
+
+@media screen and (min-width: 600px) {
+  .donator-container {
+    display: inline-block;
+  }
+}
+
+@media screen and (min-width: 960px) and (max-width: 1024px) {
+  .spacer-flex-grow {
+    flex-grow: 0.2 !important;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .spacer-flex-grow {
+    flex-grow: 0.5 !important;
+  }
 }
 </style>

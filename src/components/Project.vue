@@ -3,7 +3,7 @@
     <v-row class="text-center">
       <v-col cols="12">
         <a :href="'//' + getAd.redirect_uri" target="_blank">
-          <video width="500" height="300" id="video">
+          <video id="video">
             <source :src="getAd.video_uri" type="video/mp4" />
           </video>
         </a>
@@ -53,6 +53,12 @@ import { mapActions } from "vuex";
 
 export default {
   name: "Project",
+  data() {
+    return {
+      dialog: true,
+      persistent: true
+    };
+  },
   created() {
     window.addEventListener("focus", this.getPlayed);
     window.addEventListener("blur", this.getPaused);
@@ -60,12 +66,6 @@ export default {
   destroyed() {
     window.removeEventListener("focus", this.getPlayed);
     window.removeEventListener("blur", this.getPaused);
-  },
-  data() {
-    return {
-      dialog: true,
-      persistent: true
-    };
   },
   computed: {
     getAd() {
@@ -134,3 +134,12 @@ export default {
   }
 };
 </script>
+
+
+<style scoped lang="scss">
+video {
+  /* override other styles to make responsive */
+  width: 100% !important;
+  height: auto !important;
+}
+</style>

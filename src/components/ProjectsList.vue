@@ -11,7 +11,7 @@
           <v-card-title primary-title>{{ project.title }}</v-card-title>
           <v-card-subtitle>{{ project.description }}</v-card-subtitle>
 
-          <v-card-text class="d-flex justify-space-between">
+          <v-card-text class="d-flex flex-row justify-space-between">
             <div>
               <b>{{ project.donation_current }}</b>&nbsp;<span>donateurs</span>
             </div>
