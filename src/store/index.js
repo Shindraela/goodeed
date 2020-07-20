@@ -12,6 +12,7 @@ export default new Vuex.Store({
     count: 0,
     totalTime: 20,
     myCounterInterval: null,
+    isPaused: false,
     visible: false,
     show: false,
     displayProgressBarText: true,
@@ -41,14 +42,17 @@ export default new Vuex.Store({
       state.confirmedProgressBarText = false;
 
       state.myCounterInterval = setInterval(() => {
-        if(state.totalTime >= 1) {
-          state.totalTime--;
-          state.count += 5;
-        } else {
-          clearInterval(state.myCounterInterval);
-          state.myCounterInterval = null;
-          state.displayProgressBarText = false;
-          state.displayProgressBarBtn = true;
+        // play video only when the user is on the page
+        if(!state.isPaused) {
+          if(state.totalTime >= 1) {
+            state.totalTime--;
+            state.count += 5;
+          } else {
+            clearInterval(state.myCounterInterval);
+            state.myCounterInterval = null;
+            state.displayProgressBarText = false;
+            state.displayProgressBarBtn = true;
+          }
         }
       }, 1000);
     },
@@ -67,6 +71,12 @@ export default new Vuex.Store({
     setRandomAd (state) {
       state.ad = [...AdCampaignData.AdCampaignData];
       state.ad[Math.floor(Math.random() * state.ad.length)];
+    },
+    setVideoPause (state) {
+      state.isPaused = true;
+    },
+    removeVideoPause (state) {
+      state.isPaused = false;
     }
   },
   actions: {
@@ -90,6 +100,12 @@ export default new Vuex.Store({
     },
     setRandomAd ({ commit }) {
       commit("setRandomAd");
+    },
+    setVideoPause ({ commit }) {
+      commit("setVideoPause");
+    },
+    removeVideoPause ({ commit }) {
+      commit("removeVideoPause");
     }
   },
   getters: {

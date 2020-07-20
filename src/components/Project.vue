@@ -3,7 +3,7 @@
     <v-row class="text-center">
       <v-col cols="12">
         <a :href="'//' + getAd.redirect_uri" target="_blank">
-          <video width="500" height="300" id="video" @click="redirectToUri()">
+          <video width="500" height="300" id="video">
             <source :src="getAd.video_uri" type="video/mp4" />
           </video>
         </a>
@@ -53,6 +53,14 @@ import { mapActions } from "vuex";
 
 export default {
   name: "Project",
+  created() {
+    window.addEventListener("focus", this.getPlayed);
+    window.addEventListener("blur", this.getPaused);
+  },
+  destroyed() {
+    window.removeEventListener("focus", this.getPlayed);
+    window.removeEventListener("blur", this.getPaused);
+  },
   data() {
     return {
       dialog: true,
@@ -65,6 +73,12 @@ export default {
     },
     show() {
       return this.$store.state.show;
+    },
+    play() {
+      return this.getPlayed();
+    },
+    pause() {
+      return this.getPaused();
     }
   },
   methods: {
@@ -72,11 +86,10 @@ export default {
       "startCounter",
       "stopCounter",
       "showProgressBar",
-      "setRandomAd"
+      "setRandomAd",
+      "setVideoPause",
+      "removeVideoPause"
     ]),
-    redirectToUri() {
-
-    },
     playVideo() {
       let myVideo = document.getElementById("video");
 
@@ -87,8 +100,19 @@ export default {
     },
     confirmDonation() {
       this.stopCounter();
+      this.removeVideoPause();
       this.setRandomAd();
       this.$router.push("/");
+    },
+    getPlayed() {
+      let myVideo = document.getElementById("video");
+      myVideo.play();
+      this.removeVideoPause();
+    },
+    getPaused() {
+      let myVideo = document.getElementById("video");
+      myVideo.pause();
+      this.setVideoPause();
     }
   },
   // check if progress bar is displayed before charging the project page
@@ -96,6 +120,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.showProgressBar();
+      vm.removeVideoPause();
       next();
     });
   },
@@ -103,6 +128,7 @@ export default {
   // and set a new ad for next project visualized by the user
   beforeRouteLeave(to, from, next) {
     this.stopCounter();
+    this.removeVideoPause();
     this.setRandomAd();
     next();
   }
