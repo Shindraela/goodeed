@@ -11,6 +11,7 @@ export default new Vuex.Store({
     ad: [],
     count: 0,
     totalTime: 20,
+    percentage: 0,
     myCounterInterval: null,
     isPaused: false,
     visible: false,
@@ -115,6 +116,17 @@ export default new Vuex.Store({
     getAd: state => {
       state.ad = [...AdCampaignData.AdCampaignData];
       return state.ad[Math.floor(Math.random() * state.ad.length)];
+    },
+    percentages: state => {
+      let value = 0;
+      let values = [];
+
+      state.projects.forEach(element => {
+        value = Math.round((element.donation_current / element.donation_goal) * 100);
+        values.push(value);
+
+      });
+      return values;
     }
   }
 });
