@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import ProjectData from "@/models/projectData.js";
 import AdCampaignData from "@/models/adCampaignData.js";
+import AssociationData from "@/models/associationData.js";
 
 Vue.use(Vuex);
 
@@ -9,6 +10,7 @@ export default new Vuex.Store({
   state: {
     projects: [],
     ad: [],
+    associations: [],
     count: 0,
     totalTime: 20,
     percentage: 0,
@@ -111,10 +113,20 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    allProjects: state => {
+    getProjects: state => {
       return state.projects = [...ProjectData.ProjectData];
     },
-    getAd: state => {
+    getProjectById: state => id => {
+      return state.projects.find(project => project._id === id);
+    },
+    getAssociations: state => {
+      return state.associations = [...AssociationData.AssociationData];
+    },
+    getAssociationById: state => id => {
+      state.associations = [...AssociationData.AssociationData];
+      return state.associations.find(association => association._id === id);
+    },
+    getAds: state => {
       state.ad = [...AdCampaignData.AdCampaignData];
       return state.ad[Math.floor(Math.random() * state.ad.length)];
     },

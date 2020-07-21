@@ -2,9 +2,9 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
-        <a :href="'//' + getAd.redirect_uri" target="_blank">
+        <a :href="'//' + getAds.redirect_uri" target="_blank">
           <video id="video">
-            <source :src="getAd.video_uri" type="video/mp4" />
+            <source :src="getAds.video_uri" type="video/mp4" />
           </video>
         </a>
       </v-col>
@@ -28,7 +28,7 @@
 
         <v-dialog v-model="show" persistent width="500">
           <v-card>
-            <v-card-title class="headline grey lighten-2" primary-title>Tu viens de faire un don pour l'association Restos du coeur</v-card-title>
+            <v-card-title class="headline grey lighten-2" primary-title>Tu viens de faire un don pour l'association {{ associationTitle }}</v-card-title>
             <v-card-text>
               Ne sous-estime pas la puissance de ton réseau !
               <br />
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Project",
@@ -59,6 +59,12 @@ export default {
       persistent: true
     };
   },
+  // mounted() {
+  //   const projectId = this.$route.params.id;
+  //   const project = this.getProjectById(projectId);
+  //   const association = this.getAssociationById(project.asso_id);
+  //   this.associationTitle = association.title;
+  // },
   created() {
     window.addEventListener("blur", this.getPaused);
   },
@@ -67,9 +73,13 @@ export default {
     window.removeEventListener("blur", this.getPaused);
   },
   computed: {
-    getAd() {
-      return this.$store.getters.getAd;
-    },
+    ...mapGetters([
+      "getAds",
+      "getProjects",
+      "getProjectById",
+      "getAssociations",
+      "getAssociationById"
+    ]),
     show() {
       return this.$store.state.show;
     },
@@ -78,6 +88,16 @@ export default {
     },
     pause() {
       return this.getPaused();
+    },
+    project() {
+      const projectId = this.$route.params.id;
+      return this.getProjectById(projectId);
+    },
+    associationTitle() {
+      const project = this.project;
+      const association = this.getAssociationById(project.asso_id);
+
+      return association.title;
     }
   },
   methods: {

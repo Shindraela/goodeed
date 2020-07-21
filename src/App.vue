@@ -11,7 +11,7 @@
 
       <v-row justify="end">
         <v-flex xs12 sm6 md3 align-self-center v-show="visible" class="donator-container">
-          Don financé par <span class="stylized-ad-title">{{ getAd.title }}</span>
+          Don financé par <span class="stylized-ad-title">{{ getAds.title }}</span>
         </v-flex>
 
         <v-flex xs12 sm6 md3>
@@ -48,11 +48,11 @@ export default {
       "displayProgressBarBtn",
       "confirmedProgressBarText"
     ]),
-    getAd() {
-      return this.$store.getters.getAd;
+    getAds() {
+      return this.$store.getters.getAds;
     },
-    allProjects() {
-      return this.$store.getters.allProjects;
+    getProjects() {
+      return this.$store.getters.getProjects;
     }
   },
   methods: {
@@ -64,7 +64,7 @@ export default {
       "setCurrentAd_id"
     ]),
     updateProject() {
-      return this.allProjects.filter(project => {
+      return this.getProjects.filter(project => {
         if(project._id === this.$route.params.id) {
           project.donation_current += 1;
         }
@@ -72,7 +72,7 @@ export default {
     },
     nextStep () {
       const projectId = this.$route.params.id;
-      const adId = this.getAd._id;
+      const adId = this.getAds._id;
       localStorage.setItem("currentProjectId", projectId);
       localStorage.setItem("currentAdId", adId);
 

@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xl>
     <v-layout wrap>
-      <v-flex v-for="(project, projectIndex) in allProjects" :key="project._id" xs12 sm6 md4 lg4>
+      <v-flex v-for="(project, projectIndex) in getProjects" :key="project._id" xs12 sm6 md4 lg4>
         <v-card>
           <VueSlickCarousel :arrows="false" :dots="true" :autoplay="true">
             <div v-for="(img, index) in project.photos" :key="index">
@@ -23,7 +23,6 @@
                   </div>
                 </div>
 
-
                 <v-progress-linear class="justify-center" rounded height="4" :value="percentage"></v-progress-linear>
               </div>
             </div>
@@ -39,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import VueSlickCarousel from 'vue-slick-carousel';
 import 'vue-slick-carousel/dist/vue-slick-carousel.css';
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css';
@@ -51,14 +50,11 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "allProjects",
+      "getProjects",
       "percentages",
     ])
   },
   methods: {
-    ...mapActions([
-      "getProjects",
-    ]),
     singleProject(id) {
       this.$router.push("/project/" + id);
     }
