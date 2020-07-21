@@ -60,7 +60,6 @@ export default {
     };
   },
   created() {
-    window.addEventListener("focus", this.getPlayed);
     window.addEventListener("blur", this.getPaused);
   },
   destroyed() {
@@ -87,32 +86,33 @@ export default {
       "stopCounter",
       "showProgressBar",
       "setRandomAd",
-      "setVideoPause",
-      "removeVideoPause"
+      "setCounterPause",
+      "removeCounterPause",
     ]),
     playVideo() {
       let myVideo = document.getElementById("video");
 
       if (this.dialog === true) {
         myVideo.play();
+        window.addEventListener("focus", this.getPlayed);
+        this.removeCounterPause();
         this.startCounter();
       }
     },
     confirmDonation() {
       this.stopCounter();
-      this.removeVideoPause();
       this.setRandomAd();
       this.$router.push("/");
     },
     getPlayed() {
       let myVideo = document.getElementById("video");
       myVideo.play();
-      this.removeVideoPause();
+      this.removeCounterPause();
     },
     getPaused() {
       let myVideo = document.getElementById("video");
       myVideo.pause();
-      this.setVideoPause();
+      this.setCounterPause();
     }
   },
   // check if progress bar is displayed before charging the project page
@@ -120,7 +120,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.showProgressBar();
-      vm.removeVideoPause();
+      vm.removeCounterPause();
       next();
     });
   },
@@ -128,13 +128,11 @@ export default {
   // and set a new ad for next project visualized by the user
   beforeRouteLeave(to, from, next) {
     this.stopCounter();
-    this.removeVideoPause();
     this.setRandomAd();
     next();
   }
 };
 </script>
-
 
 <style scoped lang="scss">
 video {

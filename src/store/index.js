@@ -43,7 +43,7 @@ export default new Vuex.Store({
       state.confirmedProgressBarText = false;
 
       state.myCounterInterval = setInterval(() => {
-        // play video only when the user is on the page
+        // play counter only when the user is on the page
         if(!state.isPaused) {
           if(state.totalTime >= 1) {
             state.totalTime--;
@@ -73,10 +73,10 @@ export default new Vuex.Store({
       state.ad = [...AdCampaignData.AdCampaignData];
       state.ad[Math.floor(Math.random() * state.ad.length)];
     },
-    setVideoPause (state) {
+    setCounterPause (state) {
       state.isPaused = true;
     },
-    removeVideoPause (state) {
+    removeCounterPause (state) {
       state.isPaused = false;
     }
   },
@@ -86,6 +86,7 @@ export default new Vuex.Store({
     },
     stopCounter ({ commit }) {
       commit("stopCounter");
+      commit("setCounterPause");
     },
     showProgressBar ({ commit }) {
       commit("visibleProgressBar");
@@ -102,11 +103,11 @@ export default new Vuex.Store({
     setRandomAd ({ commit }) {
       commit("setRandomAd");
     },
-    setVideoPause ({ commit }) {
-      commit("setVideoPause");
+    setCounterPause ({ commit }) {
+      commit("setCounterPause");
     },
-    removeVideoPause ({ commit }) {
-      commit("removeVideoPause");
+    removeCounterPause ({ commit }) {
+      commit("removeCounterPause");
     }
   },
   getters: {
