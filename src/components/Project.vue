@@ -93,9 +93,9 @@ export default {
     },
     associationTitle() {
       const project = this.project;
-      const association = this.getAssociationById(project.asso_id);
-
-      return association.title;
+      const title = project ? this.getAssociationById(project.asso_id).title : "";
+      
+      return title;
     }
   },
   methods: {
