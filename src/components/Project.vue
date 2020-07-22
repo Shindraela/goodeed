@@ -75,9 +75,7 @@ export default {
   computed: {
     ...mapGetters([
       "getAds",
-      "getProjects",
       "getProjectById",
-      "getAssociations",
       "getAssociationById"
     ]),
     show() {

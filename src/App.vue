@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title>
-        <router-link to='/' tag='span' style='cursor: pointer'>
+        <router-link to="/" tag="span" style="cursor: pointer">
           <v-img src="https://static.goodeed.com/pictures/goodeed/home/lgbtq/logo_home.svg" alt="goodeed_logo" class="img-responsive"></v-img>
         </router-link>
       </v-toolbar-title>

@@ -12,8 +12,8 @@ const routes = [
     component: ProjectsList
   },
   {
-    path: '/project/:id',
-    name: 'Project',
+    path: "/project/:id",
+    name: "Project",
     props: true,
     component: Project
   }
