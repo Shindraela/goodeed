@@ -16,10 +16,11 @@ export default {
     state.associations = [...AssociationData.AssociationData];
     return state.associations.find(association => association._id === id);
   },
-  getAds: state => {
+  getAd: state => {
     state.ad = [...AdCampaignData.AdCampaignData];
     return state.ad[Math.floor(Math.random() * state.ad.length)];
   },
+  // calculate the percentage of each project with data of donation_current and donation_goal
   percentages: state => {
     let value = 0;
     let values = [];

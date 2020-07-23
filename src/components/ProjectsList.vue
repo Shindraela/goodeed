@@ -12,6 +12,7 @@
           <v-card-subtitle>{{ project.description }}</v-card-subtitle>
 
           <v-card-text class="d-flex flex-column">
+            <!-- nested v-for and v-if for making match the percentage value with right project -->
             <div v-for="(percentage, index) in percentages" :key="index">
               <div v-if="index === projectIndex">
                 <div class="d-flex flex-row justify-space-between">
@@ -55,6 +56,7 @@ export default {
     ])
   },
   methods: {
+    // pass the project id to use it after
     singleProject(id) {
       this.$router.push("/project/" + id);
     }

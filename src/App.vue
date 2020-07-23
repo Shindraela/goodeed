@@ -11,7 +11,7 @@
 
       <v-row justify="end">
         <v-flex xs12 sm6 md3 align-self-center v-show="visible" class="donator-container">
-          Don financé par <span class="stylized-ad-title">{{ getAds.title }}</span>
+          Don financé par <span class="stylized-ad-title">{{ getAd.title }}</span>
         </v-flex>
 
         <v-flex xs12 sm6 md3>
@@ -48,8 +48,8 @@ export default {
       "displayProgressBarBtn",
       "confirmedProgressBarText"
     ]),
-    getAds() {
-      return this.$store.getters.getAds;
+    getAd() {
+      return this.$store.getters.getAd;
     },
     getProjects() {
       return this.$store.getters.getProjects;
@@ -59,10 +59,9 @@ export default {
     ...mapActions([
       "showProgressBar",
       "hideProgressBar",
-      "showModal",
-      "setCurrentProject_id",
-      "setCurrentAd_id"
+      "showModal"
     ]),
+    // update total of donation_current of project with 'getters.getProjects' by adding +1 after user validated donation
     updateProject() {
       return this.getProjects.filter(project => {
         if(project._id === this.$route.params.id) {
@@ -70,9 +69,10 @@ export default {
         }
       });
     },
+    // get project id with $route params and ad id with 'getters.getAd' for setting it in localStorage after donation validation
     nextStep () {
       const projectId = this.$route.params.id;
-      const adId = this.getAds._id;
+      const adId = this.getAd._id;
       localStorage.setItem("currentProjectId", projectId);
       localStorage.setItem("currentAdId", adId);
 
@@ -80,6 +80,7 @@ export default {
       this.showModal();
     }
   },
+  // make sure that progress bar appears only on the project page
   watch: {
     $route: function() {
       if (this.$route.path != "/") {

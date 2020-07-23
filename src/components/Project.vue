@@ -2,9 +2,9 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
-        <a :href="'//' + getAds.redirect_uri" target="_blank">
+        <a :href="'//' + getAd.redirect_uri" target="_blank">
           <video id="video">
-            <source :src="getAds.video_uri" type="video/mp4" />
+            <source :src="getAd.video_uri" type="video/mp4" />
           </video>
         </a>
       </v-col>
@@ -59,12 +59,7 @@ export default {
       persistent: true
     };
   },
-  // mounted() {
-  //   const projectId = this.$route.params.id;
-  //   const project = this.getProjectById(projectId);
-  //   const association = this.getAssociationById(project.asso_id);
-  //   this.associationTitle = association.title;
-  // },
+  // create blur and focus event listeners to make video play and pause
   created() {
     window.addEventListener("blur", this.getPaused);
   },
@@ -74,7 +69,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "getAds",
+      "getAd",
       "getProjectById",
       "getAssociationById"
     ]),
@@ -87,10 +82,12 @@ export default {
     pause() {
       return this.getPaused();
     },
+    // get the project related to the association
     project() {
       const projectId = this.$route.params.id;
       return this.getProjectById(projectId);
     },
+    // use the asso_id of returned project to get related association and its title
     associationTitle() {
       const project = this.project;
       const title = project ? this.getAssociationById(project.asso_id).title : "";
@@ -107,6 +104,7 @@ export default {
       "setCounterPause",
       "removeCounterPause",
     ]),
+    // play video and start counter
     playVideo() {
       let myVideo = document.getElementById("video");
 
@@ -117,16 +115,20 @@ export default {
         this.startCounter();
       }
     },
+    // at the end, stop counter and prepare for next ad project page by setting new random ad
     confirmDonation() {
       this.stopCounter();
       this.setRandomAd();
       this.$router.push("/");
     },
+    // use in event listener for watching if user still present on the page
+    // if yes, then play the video and counter
     getPlayed() {
       let myVideo = document.getElementById("video");
       myVideo.play();
       this.removeCounterPause();
     },
+    // if not, set video and counter on pause
     getPaused() {
       let myVideo = document.getElementById("video");
       myVideo.pause();
